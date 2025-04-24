@@ -1,8 +1,11 @@
 import numpy as np
 from Activation import Relu_activation,Softmax_activation
+from Loss import Cross_entropy_loss
 
 inputs=[[1.2,3.4,5.6],
         [7.8,9.0,1.2]]
+
+y_true=[0,1]
 
 class Dense_layer:
     def __init__(self,input_size,neuron_number):
@@ -39,11 +42,13 @@ relu.activate_forward(layer1.output)
 
 layer2=Dense_layer(3,2)
 layer2.forward(relu.output)
-
 softmax=Softmax_activation()
 softmax.activate_forward(layer2.output)
 
-print('layer1',softmax.output)
+loss=Cross_entropy_loss()
+print('loss',loss.calculate_loss(y_true,softmax.output))
+
+
 
 # print('softmax',softmax.output)
 
