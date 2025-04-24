@@ -25,6 +25,11 @@ class Cross_entropy_loss(Loss):
         return np.mean(loss)
 
 
+    def back_propagate(self ,y_true,y_predicted):
+        self.dl=-(y_true/y_predicted)
+        return self.dl
+    
+
 
 
 if __name__=="__main__":
