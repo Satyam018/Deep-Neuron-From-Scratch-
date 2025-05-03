@@ -1,3 +1,4 @@
+import numpy as np
 class GDOptimiser:
     def __init__(self,learning_rate=1,decay=0.01,momentum=0.6):
         self.learning_rate=learning_rate
@@ -24,7 +25,7 @@ class GDOptimiser:
 
             layer.weights+=weight_update
             layer.biases+=bias_update
-            
+
         else:
             layer.weights-=self.learning_rate*layer.dweights
             layer.biases-=self.learning_rate*layer.dbiases
@@ -38,7 +39,4 @@ class GDOptimiser:
 
 
 
-
-
-class GDOptimiser
 
