@@ -26,7 +26,13 @@ class Softmax_activation(Activation):
         exp_inputs=np.exp(scale_down)
         self.output=exp_inputs/np.sum(exp_inputs,axis=1,keepdims=True)
     
-    def back_propagation(self, dinputs): 
-    # Assumes dinputs is the true labels (one-hot or adjusted gradient)
-        self.doutputs = self.output - dinputs
-        return self.doutputs
+
+
+    def back_propagation(self, dinputs):
+        self.dinputs = np.empty_like(dinputs)
+        for index, (single_output, single_dinput) in enumerate(zip(self.output, dinputs)):
+            single_output = single_output.reshape(-1, 1)
+            jacobian_matrix = np.diagflat(single_output) - np.dot(single_output, single_output.T)
+            self.dinputs[index] = np.dot(jacobian_matrix, single_dinput)
+
+        return self.dinputs

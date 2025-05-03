@@ -20,8 +20,8 @@ class Dense_layer:
 
 
     def back_propagation(self,output_gradient,inputs):
-        self.dweights=np.dot(output_gradient,inputs.T)
         self.dinputs=np.dot(self.weights.T,output_gradient)
+        self.dweights=np.dot(output_gradient,inputs.T)
         self.dbiases=np.sum(output_gradient,axis=0,keepdims=True)
 
     

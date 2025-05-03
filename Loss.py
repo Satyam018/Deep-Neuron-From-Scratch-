@@ -22,20 +22,25 @@ class Cross_entropy_loss(Loss):
             output_prediction=np.sum(y_predicted_clip*y_true,axis=1)
         
         loss=-np.log(output_prediction)
-        return np.mean(loss)
-
+        return  np.mean(loss),loss
 
     def back_propagate(self ,y_true,y_predicted):
-        self.dl=-(y_true/y_predicted)
+        y_true=np.array(y_true)
+        y_predicted_clip = np.clip(y_predicted, 1e-19, 1 - 1e-19)
+        self.dl=-(y_true/y_predicted_clip)
         return self.dl
     
 
 
 
 if __name__=="__main__":
-    y_true=[0,1,2]
+    # y_true=[0,1,2]
+    y_true=[[1,0,0],[0,1,0],[0,0,1]]
     y_predicted=[[0.9,0.05,0.05],[0.05,0.9,0.05],[0.05,0.05,0.9]]
     loss=Cross_entropy_loss()
-    print(loss.calculate_loss(y_true,y_predicted))
+    mean_loss,l=loss.calculate_loss(y_true,y_predicted)
+    print(loss.back_propagate(y_true,y_predicted))
+
+    # print(loss.back_propagate(y_true,y_predicted))
 
    
